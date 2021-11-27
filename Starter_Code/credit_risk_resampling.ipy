@@ -97,11 +97,37 @@ scaler = StandardScaler()
 # loans_binary_encoded = pd.get_dummies(loans_df, columns=["gender"])
 # print(loans_binary_encoded.head())
 
-new_X_train=pd.get_dummies(X_train, columns=["something"])
+new_X_train=pd.get_dummies(X_train, columns=["homeowner"])
 
 #%%
 
 scaler.fit(new_X_train)
-print(scaler.mean_)
+print(f'the scaler mean is {scaler.mean_}')
 
 #%%
+
+# Fit the Standard Scaler with the training data
+# When fitting scaling functions, only train on the training dataset
+
+#%%
+
+
+# Creating the scaler instance
+data_scaler = StandardScaler()
+
+# Fitting the scaler
+data_scaler.fit(new_x_train)
+
+#%%
+
+# Scale the training and testing data
+
+# loans_data_scaled = data_scaler.transform(new_x_train)
+# loans_data_scaled[:5]
+
+X_train_scaled = data_scaler.transform(new_X_train)
+X_test_scaled = data_scaler.transform(X_test)
+
+#%%
+
+# continue 01b and 03b
