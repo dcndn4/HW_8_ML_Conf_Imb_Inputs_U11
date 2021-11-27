@@ -91,11 +91,17 @@ from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
 #%%
 
-new_X_train=get_dummies(X_train)
+# Dummy Encoding (Binary Encoded Data)¶
+# .get_dummies avoids this hassle entirely. All are 0s and 1s.  [from #1b exercise]
+# Binary encoding using Pandas (single column)
+# loans_binary_encoded = pd.get_dummies(loans_df, columns=["gender"])
+# print(loans_binary_encoded.head())
+
+new_X_train=pd.get_dummies(X_train, columns=["something"])
 
 #%%
 
-scaler.fit(X_train)
+scaler.fit(new_X_train)
 print(scaler.mean_)
 
 #%%
