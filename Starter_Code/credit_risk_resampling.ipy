@@ -130,9 +130,39 @@ X_train_scaled = data_scaler.transform(new_X_train)
 X_test_scaled = data_scaler.transform(new_X_test)
 
 #%%
+#%%
 
-# continue 01b and 03b
+# Simple Logistic Regression¶
+
 
 #%%
+#%%
+
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression(solver='lbfgs', random_state=1)
+model.fit(X_train_scaled, y_train)
+
+#%%
+
+# Calculated the balanced accuracy score
+from sklearn.metrics import balanced_accuracy_score
+y_pred = model.predict(X_test_scaled)
+balanced_accuracy_score(y_test, y_pred)
+
+#%%
+
+# Display the confusion matrix
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_test, y_pred)
+
+#%%
+
+# Print the imbalanced classification report
+from imblearn.metrics import classification_report_imbalanced
+print(classification_report_imbalanced(y_test, y_pred))
+
+#%%
+
+
 
 
