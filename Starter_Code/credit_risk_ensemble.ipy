@@ -51,7 +51,7 @@ print(df.head())
 #%%
 
 # Create our features
-X = df.drop(columns="loan_status")
+X = df.drop(columns=["loan_status", "issue_d", "pymnt_plan", "initial_list_status", "next_pymnt_d"])
 
 # Create our target
 y = df["loan_status"]
@@ -90,4 +90,14 @@ X_train, X_test, y_train, y_test = train_test_split(X,
 
 
 #%%
+#%%
+
+# Create the StandardScaler instance to normalize the values individually, before applying the ML model, to get it w/n distr of mean value of 0 and std dev of 1
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+new_X_train=pd.get_dummies(X_train, columns=["home_ownership", "verification_status", "hardship_flag", "debt_settlement_flag", "application_type"])
+new_X_test=pd.get_dummies(X_test, columns=["home_ownership", "verification_status", "hardship_flag", "debt_settlement_flag", "application_type"])
+scaler.fit(new_X_train)
+print(f'the scaler mean is {scaler.mean_}')
+
 #%%
