@@ -310,3 +310,58 @@ from imblearn.metrics import classification_report_imbalanced
 print(classification_report_imbalanced(y_test, y_pred))
 
 #%%
+#%%
+
+Combination (Over and Under) Sampling
+
+#%%
+#%%
+
+# In this section, you will test a combination over- and under-sampling algorithm to determine if the algorithm results in the best performance compared to the other sampling algorithms above. You will resample the data using the SMOTEENN algorithm and complete the folliowing steps:
+
+#    View the count of the target classes using Counter from the collections library.
+#    Use the resampled data to train a logistic regression model.
+#    Calculate the balanced accuracy score from sklearn.metrics.
+#    Display the confusion matrix from sklearn.metrics.
+#    Generate a classication report using the imbalanced_classification_report from imbalanced-learn.
+
+# Note: Use a random state of 1 for each sampling algorithm to ensure consistency between tests
+
+#%%
+
+# Resample the training data with SMOTEENN
+from imblearn.combine import SMOTEENN
+
+sm = SMOTEENN(random_state=1)
+X_resampled, y_resampled = sm.fit_resample(X_train_scaled, y_train)
+
+# View the count of target classes with Counter
+print(Counter(y_resampled))
+
+#%%
+
+# Train the Logistic Regression model using the resampled data
+model = LogisticRegression(solver='lbfgs', random_state=1)
+model.fit(X_resampled, y_resampled)
+
+#%%
+
+# Calculate the balanced accuracy score
+from sklearn.metrics import balanced_accuracy_score
+
+balanced_accuracy_score(y_test, y_pred)
+
+#%%
+
+# Display the confusion matrix
+y_pred = model.predict(X_test_scaled)
+confusion_matrix(y_test, y_pred)
+
+#%%
+
+# Print the imbalanced classification report
+from imblearn.metrics import classification_report_imbalanced
+
+print(classification_report_imbalanced(y_test, y_pred))
+
+#%%
