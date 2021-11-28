@@ -162,7 +162,61 @@ from imblearn.metrics import classification_report_imbalanced
 print(classification_report_imbalanced(y_test, y_pred))
 
 #%%
+#%%
 
+# Oversampling
+
+# In this section, you will compare two oversampling algorithms to determine which algorithm results in the best performance. You will oversample the data using the naive random oversampling algorithm and the SMOTE algorithm. For each algorithm, be sure to complete the folliowing steps:
+
+#    View the count of the target classes using Counter from the collections library.
+#    Use the resampled data to train a logistic regression model.
+#    Calculate the balanced accuracy score from sklearn.metrics.
+#    Print the confusion matrix from sklearn.metrics.
+#    Generate a classication report using the imbalanced_classification_report from imbalanced-learn.
+
+# Note: Use a random state of 1 for each sampling algorithm to ensure consistency between tests
+
+#%%
+#%%
+
+# Naive Random Oversampling
+
+#%%
+#%%
+
+# Resample the training data with the RandomOversampler
+from imblearn.over_sampling import RandomOverSampler
+
+ros = RandomOverSampler(random_state=1)
+X_resampled, y_resampled = ros.fit_resample(X_train_scaled, y_train)
+
+# View the count of target classes with Counter
+print(Counter(y_resampled))
+
+#%%
+
+# Train the Logistic Regression model using the resampled data
+from sklearn.linear_model import LogisticRegression
+
+#%%
+
+# Calculated the balanced accuracy score
+model = LogisticRegression(solver='lbfgs', random_state=1)
+print(model.fit(X_resampled, y_resampled))
+
+#%%
+
+# Display the confusion matrix
+from sklearn.metrics import confusion_matrix
+
+y_pred = model.predict(X_test_scaled)
+
+#%%
+
+# Print the imbalanced classification report
+print(confusion_matrix(y_test, y_pred))
+
+#%%
 
 
 
