@@ -1,0 +1,93 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Nov 28 14:56:34 2021
+
+@author: CS_Knit_tinK_SC
+"""
+
+# Ensemble Learning
+
+#%%
+# Initial Imports
+
+#%%
+
+import warnings
+warnings.filterwarnings('ignore')
+
+#%%
+
+import numpy as np
+import pandas as pd
+from pathlib import Path
+from collections import Counter
+
+#%%
+
+from sklearn.metrics import balanced_accuracy_score
+from sklearn.metrics import confusion_matrix
+from imblearn.metrics import classification_report_imbalanced
+
+#%%
+
+# Read the CSV and Perform Basic Data Cleaning
+
+#%%
+
+# Load the data
+#file_path = Path('Resources/LoanStats_2019Q1.csv')
+file_path="C:/Users/CS_Knit_tinK_SC/Documents/GitHub/HW_8_ML_Conf_Imb_Inputs_U11/Resources/LoanStats_2019Q1.csv"
+df = pd.read_csv(file_path)
+
+# Preview the data
+print(df.head())
+
+#%%
+#%%
+
+# Split the Data into Training and Testing
+
+#%%
+#%%
+
+# Create our features
+X = df.drop(columns="loan_status")
+
+# Create our target
+y = df["loan_status"]
+
+#%%
+
+print(X.describe())
+
+#%%
+
+# Check the balance of our target values
+print(y.head())
+print(y.value_counts())
+
+#%%
+
+# Create X_train, X_test, y_train, y_test
+from sklearn.model_selection import train_test_split
+# from library.module import class
+
+X_train, X_test, y_train, y_test = train_test_split(X, 
+                                                    y, 
+                                                    # Controls the shuffling applied to the data before applying the split.
+                                                    # Pass an int for reproducible output across multiple function calls.
+                                                    random_state=1, 
+                                                    # If not None, data is split in a stratified fashion, using this as the class labels
+                                                    # https://www.scribbr.com/methodology/stratified-sampling/
+                                                    stratify=y)
+
+#%%
+#%%
+
+# Data Pre-Processing¶
+
+# Scale the training and testing data using the StandardScaler from sklearn. Remember that when scaling the data, you only scale the features data (X_train and X_testing).
+
+
+#%%
+#%%
