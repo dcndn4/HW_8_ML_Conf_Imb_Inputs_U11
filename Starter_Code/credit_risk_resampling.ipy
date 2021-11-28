@@ -254,4 +254,59 @@ confusion_matrix(y_test, y_pred)
 print(confusion_matrix(y_test, y_pred))
 
 #%%
+#%%
 
+# Undersampling
+
+#%%
+#%%
+
+# In this section, you will test an undersampling algorithm to determine which algorithm results in the best performance compared to the oversampling algorithms above. You will undersample the data using the Cluster Centroids algorithm and complete the folliowing steps:
+
+#    View the count of the target classes using Counter from the collections library.
+#    Use the resampled data to train a logistic regression model.
+#    Calculate the balanced accuracy score from sklearn.metrics.
+#    Display the confusion matrix from sklearn.metrics.
+#    Generate a classication report using the imbalanced_classification_report from imbalanced-learn.
+
+# Note: Use a random state of 1 for each sampling algorithm to ensure consistency between tests
+
+#%%
+
+# Resample the data using the ClusterCentroids resampler
+from imblearn.under_sampling import ClusterCentroids
+
+cc = ClusterCentroids(random_state=1)
+X_resampled, y_resampled = cc.fit_resample(X_train_scaled, y_train)
+
+# View the count of target classes with Counter
+Counter(y_resampled)
+
+#%%
+
+# Train the Logistic Regression model using the resampled data
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression(solver='lbfgs', random_state=1)
+model.fit(X_resampled, y_resampled)
+
+#%%
+
+# Calculate the balanced accuracy score
+from sklearn.metrics import balanced_accuracy_score
+
+balanced_accuracy_score(y_test, y_pred)
+
+#%%
+
+# Display the confusion matrix
+from sklearn.metrics import confusion_matrix
+y_pred = model.predict(X_test)
+confusion_matrix(y_test, y_pred)
+
+#%%
+
+# Print the imbalanced classification report
+from imblearn.metrics import classification_report_imbalanced
+print(classification_report_imbalanced(y_test, y_pred))
+
+#%%
