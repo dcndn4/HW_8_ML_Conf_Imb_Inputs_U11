@@ -217,6 +217,41 @@ y_pred = model.predict(X_test_scaled)
 print(confusion_matrix(y_test, y_pred))
 
 #%%
+#%%
 
+# SMOTE Oversampling
 
+#%%
+#%%
+
+# Resample the training data with SMOTE
+from imblearn.over_sampling import SMOTE
+from collections import Counter
+X_resampled, y_resampled = SMOTE(random_state=1, sampling_strategy=1.0).fit_resample(X_train_scaled, y_train)
+# View the count of target classes with Counter
+print(Counter(y_resampled))
+
+#%%
+
+# Train the Logistic Regression model using the resampled data
+from sklearn.linear_model import LogisticRegression
+
+#%%
+
+# Calculated the balanced accuracy score
+model = LogisticRegression(solver='lbfgs', random_state=1)
+print(model.fit(X_resampled, y_resampled))
+
+#%%
+
+# Display the confusion matrix
+y_pred = model.predict(X_test_scaled)
+confusion_matrix(y_test, y_pred)
+
+#%%
+
+# Print the imbalanced classification report
+print(confusion_matrix(y_test, y_pred))
+
+#%%
 
