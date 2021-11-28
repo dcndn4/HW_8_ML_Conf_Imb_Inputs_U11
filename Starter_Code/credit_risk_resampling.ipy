@@ -300,7 +300,7 @@ balanced_accuracy_score(y_test, y_pred)
 
 # Display the confusion matrix
 from sklearn.metrics import confusion_matrix
-y_pred = model.predict(X_test)
+y_pred = model.predict(X_test_scaled)
 confusion_matrix(y_test, y_pred)
 
 #%%
