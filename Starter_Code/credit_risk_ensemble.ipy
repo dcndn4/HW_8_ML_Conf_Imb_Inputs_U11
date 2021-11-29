@@ -101,3 +101,17 @@ scaler.fit(new_X_train)
 print(f'the scaler mean is {scaler.mean_}')
 
 #%%
+
+# Fit the Standard Scaler with the training data
+# When fitting scaling functions, only train on the training dataset
+data_scaler = StandardScaler()
+
+data_scaler.fit(new_X_train)
+
+#%%
+
+# Scale the training and testing data
+X_train_scaled = data_scaler.transform(new_X_train)
+X_test_scaled = data_scaler.transform(new_X_test)
+
+#%%
