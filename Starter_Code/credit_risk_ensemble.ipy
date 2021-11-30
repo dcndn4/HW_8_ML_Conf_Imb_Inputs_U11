@@ -21,6 +21,8 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from collections import Counter
+import seaborn as sns
+%matplotlib inline
 
 #%%
 
@@ -106,7 +108,7 @@ print(f'the scaler mean is {scaler.mean_}')
 # When fitting scaling functions, only train on the training dataset
 data_scaler = StandardScaler()
 
-data_scaler.fit(new_X_train)
+data_scaler.fit_transform(new_X_train)
 
 #%%
 
@@ -115,3 +117,24 @@ X_train_scaled = data_scaler.transform(new_X_train)
 X_test_scaled = data_scaler.transform(new_X_test)
 
 #%%
+
+# Resample the training data with the BalancedRandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+#%%
+
+brf = BalancedRandomForestClassifier(n_estimators=1000, random_state=1)
+print(brf.fit(X_train_scaled, y_train))
+
+#%%
+
+#%%
+
+# Calculated the balanced accuracy score
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import balanced_accuracy_score
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+
+y_pred = model.predict(X_test_scaled)
+print(f'the random forest classifier balanced accuracy score is: {balanced_accuracy_score(y_test, y_pred):.4f}')
