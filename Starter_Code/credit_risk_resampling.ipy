@@ -84,12 +84,12 @@ X_train, X_test, y_train, y_test = train_test_split(X,
 # Remember that when scaling the data, you only scale the features data (X_train and X_testing).
 
 #%%
-#%%
+#%% 1 of 3 in JL cell # 9
 
 # Create the StandardScaler instance to normalize the values individually, before applying the ML model, to get it w/n distr of mean value of 0 and std dev of 1
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
-#%%
+#%% 2 of 3 in JL cell # 9
 
 # Dummy Encoding (Binary Encoded Data)¶
 # .get_dummies avoids this hassle entirely. All are 0s and 1s.  [from #1b exercise]
@@ -100,17 +100,17 @@ scaler = StandardScaler()
 new_X_train=pd.get_dummies(X_train, columns=["homeowner"])
 new_X_test=pd.get_dummies(X_test, columns=["homeowner"])
 
-#%%
+#%% 3 of 3 in JL cell # 9
 
 scaler.fit(new_X_train)
 print(f'the scaler mean is {scaler.mean_}')
 
-#%%
+#%% # 10 JL a
 
 # Fit the Standard Scaler with the training data
 # When fitting scaling functions, only train on the training dataset
 
-#%%
+#%% # 10 JL b
 
 
 # Creating the scaler instance
@@ -147,7 +147,7 @@ model.fit(X_train_scaled, y_train)
 # Calculated the balanced accuracy score
 from sklearn.metrics import balanced_accuracy_score
 y_pred = model.predict(X_test_scaled)
-balanced_accuracy_score(y_test, y_pred)
+print(f'The logistic-regression model balanced accuracy score is: {balanced_accuracy_score(y_test, y_pred)}')
 
 #%%
 
@@ -193,17 +193,24 @@ X_resampled, y_resampled = ros.fit_resample(X_train_scaled, y_train)
 # View the count of target classes with Counter
 print(Counter(y_resampled))
 
-#%%
+#%% JL # 17 A
 
 # Train the Logistic Regression model using the resampled data
 from sklearn.linear_model import LogisticRegression
 
-#%%
+#%% JL # 17 B
 
-# Calculated the balanced accuracy score
+
 model = LogisticRegression(solver='lbfgs', random_state=1)
 print(model.fit(X_resampled, y_resampled))
 
+#%%
+
+# Calculated the balanced accuracy score
+
+from sklearn.metrics import balanced_accuracy_score
+y_pred = model.predict(X_test_scaled)
+print(f'The naive-random-oversampling balanced accuracy score is: {balanced_accuracy_score(y_test, y_pred):.4}')
 #%%
 
 # Display the confusion matrix
@@ -215,6 +222,13 @@ y_pred = model.predict(X_test_scaled)
 
 # Print the imbalanced classification report
 print(confusion_matrix(y_test, y_pred))
+
+#%%
+
+# Print the imbalanced classification report
+from imblearn.metrics import classification_report_imbalanced
+
+print(classification_report_imbalanced(y_test, y_pred))
 
 #%%
 #%%
@@ -231,27 +245,36 @@ X_resampled, y_resampled = SMOTE(random_state=1, sampling_strategy=1.0).fit_resa
 # View the count of target classes with Counter
 print(Counter(y_resampled))
 
-#%%
+#%% JL # 39 A
 
 # Train the Logistic Regression model using the resampled data
 from sklearn.linear_model import LogisticRegression
 
-#%%
+#%% JL # 39 B
 
-# Calculated the balanced accuracy score
+
 model = LogisticRegression(solver='lbfgs', random_state=1)
 print(model.fit(X_resampled, y_resampled))
 
 #%%
 
+# Calculated the balanced accuracy score
+from sklearn.metrics import balanced_accuracy_score
+y_pred = model.predict(X_test_scaled)
+print(f'The smote-oversampling balanced accuracy score is: {balanced_accuracy_score(y_test, y_pred):.4}')
+
+#%%
+
 # Display the confusion matrix
 y_pred = model.predict(X_test_scaled)
-confusion_matrix(y_test, y_pred)
+print(confusion_matrix(y_test, y_pred))
 
 #%%
 
 # Print the imbalanced classification report
-print(confusion_matrix(y_test, y_pred))
+from imblearn.metrics import classification_report_imbalanced
+
+print(classification_report_imbalanced(y_test, y_pred))
 
 #%%
 #%%
@@ -294,14 +317,15 @@ model.fit(X_resampled, y_resampled)
 # Calculate the balanced accuracy score
 from sklearn.metrics import balanced_accuracy_score
 
-balanced_accuracy_score(y_test, y_pred)
+y_pred = model.predict(X_test_scaled)
+print(f'The undersampling balanced accuracy score is: {balanced_accuracy_score(y_test, y_pred):.4}')
 
 #%%
 
 # Display the confusion matrix
 from sklearn.metrics import confusion_matrix
 y_pred = model.predict(X_test_scaled)
-confusion_matrix(y_test, y_pred)
+print(confusion_matrix(y_test, y_pred))
 
 #%%
 
@@ -349,13 +373,14 @@ model.fit(X_resampled, y_resampled)
 # Calculate the balanced accuracy score
 from sklearn.metrics import balanced_accuracy_score
 
-balanced_accuracy_score(y_test, y_pred)
+y_pred = model.predict(X_test_scaled)
+print(f'the combination over/under sampling balanced accuracy score is: {balanced_accuracy_score(y_test, y_pred):.4f}')
 
 #%%
 
 # Display the confusion matrix
 y_pred = model.predict(X_test_scaled)
-confusion_matrix(y_test, y_pred)
+print(confusion_matrix(y_test, y_pred))
 
 #%%
 
@@ -365,3 +390,17 @@ from imblearn.metrics import classification_report_imbalanced
 print(classification_report_imbalanced(y_test, y_pred))
 
 #%%
+
+# Final Questions
+
+1. Which model had the best balanced accuracy score?
+
+   All models produced the same balanced accuracy score of .9947, which is very good since it's on a scale of 0 to 1.
+
+2. Which model had the best recall score?
+
+    All models produced the same recall score ('rec' column of imbalanced classification report) of .99.
+
+3. Which model had the best geometric mean score?
+
+    All models produced the same recall score ('geo' column of imbalanced classification report) of .99.
